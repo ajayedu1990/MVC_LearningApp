@@ -1,0 +1,100 @@
+﻿@using LearningApp.Utility
+@using LearningApp.Models
+@model ArticleDetails
+
+@{
+    /**/
+
+    ViewBag.Title = "AddArticle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AddArticle</h2>
+@using (Html.BeginForm("CreateArticle", "Admin", FormMethod.Post, new { @id = "AddArticleForm" }))
+{
+    <div class="container">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblArticleName", "Article Name")
+                </div>
+                <div class="col-lg-8">
+                    @* @Html.TextBoxFor(m => m.ArticleName)*@
+                    @Html.EditorFor(m => m.ArticleName)
+                    @Html.ValidationMessageFor(m => m.ArticleName," ", new { @class="text-danger"})
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblArticleType", "Article Type")
+                </div>
+                <div class="col-lg-8">
+                    @Html.DropDownListFor(m => m.ArticleType, new SelectList(Enum.GetValues(typeof(ArticleTypeEnum))), " ")
+                    @Html.ValidationMessageFor(m => m.ArticleType, "", new { @class ="text-danger" })
+                    @*@Html.DropDownList("articleType", new SelectList(Enum.GetValues(typeof(ArticleType))), "Select Type")*@
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblIsSeries", "Is Series")
+                </div>
+                <div class="col-lg-8">
+                    @Html.EditorFor(m => m.IsSeries)
+                    @Html.ValidationMessageFor(m=>m.IsSeries,"",new { @class="text-danger"})
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblArticleContent", "Article Content")
+                </div>
+                <div class="col-lg-10">
+                    @Html.TextAreaFor(m => m.ArticleContent)
+                    @Html.ValidationMessageFor(m => m.ArticleContent, "", new { @class="text-danger"})
+                    @*@Html.TextAreaFor(m=>m.ArticleContent)*@
+                    @*@Html.TextArea("articleContent", new { @class = "text-content" })*@
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    <input type="button" title="clear" value="Clear" onclick="ClearFields()" />
+                </div>
+                <div class="col-lg-8">
+                    <input type="submit" title="submit" id="AddArticleSubmit" value="Add Article" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function ClearFields() {
+
+        $("#ArticleName").val = "";
+        $("#ArticleType").val = "";
+        $("#IsSeries").val = "";
+        $("#ArticleContent").val = "";
+    }
+    function CreateArticle() {
+        var name = $('articleType').val();
+        var articleDetails = {
+            "ArticleName": name,
+            "ArticleType": $('articleType').val(),
+            "IsSeries": $('isSeries').val(),
+            "ArticleContent": $('articleContent').val()
+        }
+
+        console.log(articleDetails);
+    }
+</script>
