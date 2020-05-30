@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.960
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningApp", "LearningApp\LearningApp.csproj", "{6459FE11-6E0E-4FB1-89AD-FE10BC4CF91C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningApp.Tests", "LearningApp.Tests\LearningApp.Tests.csproj", "{1940BF17-7265-49D0-AF6E-005B765EBCB6}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LearningAppDB", "LearningAppDB\LearningAppDB.sqlproj", "{19920801-DBED-4673-BE4B-75A480ED04CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,12 @@ Global
 		{1940BF17-7265-49D0-AF6E-005B765EBCB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1940BF17-7265-49D0-AF6E-005B765EBCB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1940BF17-7265-49D0-AF6E-005B765EBCB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19920801-DBED-4673-BE4B-75A480ED04CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19920801-DBED-4673-BE4B-75A480ED04CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19920801-DBED-4673-BE4B-75A480ED04CD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{19920801-DBED-4673-BE4B-75A480ED04CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19920801-DBED-4673-BE4B-75A480ED04CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19920801-DBED-4673-BE4B-75A480ED04CD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
