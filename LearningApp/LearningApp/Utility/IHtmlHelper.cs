@@ -13,5 +13,7 @@ namespace LearningApp.Utility
         Task<HttpClient> GetClientAsync();
 
         Task<string> CreateArticleAsync(ArticleDetails article);
+
+        Task<List<string>> GetArticleNames();
     }
 }

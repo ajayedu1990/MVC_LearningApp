@@ -33,6 +33,12 @@ namespace LearningApp.Models
             set;
         }
 
+        public List<string> RelatedArticles
+        {
+            get;
+            set;
+        }
+
         [Required(AllowEmptyStrings =false,ErrorMessage = "please enter the article content")]
         public string ArticleContent
         {

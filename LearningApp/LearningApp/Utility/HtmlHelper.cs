@@ -29,7 +29,27 @@ namespace LearningApp.Utility
                     return "not success";
                 }
             }
-            return string.Empty;
+        }
+
+        public async Task<List<string>> GetArticleNames()
+        {
+            try
+            {
+                using (var client = await GetClientAsync())
+                {
+                    var response = await client.GetAsync("getarticlenames");
+
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    List<string> articleNames = JsonConvert.DeserializeObject<List<string>>(content);
+
+                    return articleNames;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<HttpClient> GetClientAsync()

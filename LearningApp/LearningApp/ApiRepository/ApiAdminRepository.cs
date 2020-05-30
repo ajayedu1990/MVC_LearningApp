@@ -49,5 +49,36 @@ namespace LearningApp.ApiRepository
                 return ex.Message;
             }
         }
+
+        public List<string> GetArticleNames()
+        {
+            List<string> articleNames = new List<string>();
+            try
+            {
+                var conn = _sqlHelper.GetSQLConnection();
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("GetArticleNames", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            for(int i = 0; i < reader.FieldCount ; i++)
+                            {
+                                articleNames.Add(reader.GetString(i));
+                            }
+                        }
+                    }
+                }
+                return articleNames;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

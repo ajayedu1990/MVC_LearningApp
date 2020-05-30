@@ -10,7 +10,7 @@ namespace LearningApp.ApiRepository
     {
         public SqlConnection GetSQLConnection()
         {
-            string connString = "Data Source=AJAY-PC\\SQLEXPRESS;Initial Catalog=LearningApp;Integrated Security=True";
+            string connString = "Data Source=LAPTOP-BLU2I7JT\\SQLEXPRESS;Initial Catalog=LearningApp;Integrated Security=True";
 
             SqlConnection conn = new SqlConnection(connString);
            
