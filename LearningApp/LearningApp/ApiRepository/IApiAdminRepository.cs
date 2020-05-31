@@ -10,5 +10,7 @@ namespace LearningApp.ApiRepository
     public interface IApiAdminRepository
     {
         string CreateArticle(ArticleDetails article);
+
+        List<string> GetArticleNames();
     }
 }
