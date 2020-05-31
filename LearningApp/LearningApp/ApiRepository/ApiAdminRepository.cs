@@ -29,6 +29,17 @@ namespace LearningApp.ApiRepository
                 cmd.Parameters.AddWithValue("@articleName", article.ArticleName);
                 cmd.Parameters.AddWithValue("@articleType", article.ArticleType);
                 cmd.Parameters.AddWithValue("@isSeries", article.IsSeries);
+                if (article.IsSeries)
+                {
+                    if (article.RelatedArticles.Count > 1)
+                    {
+                        cmd.Parameters.AddWithValue("@firstRelatedArticle", article.RelatedArticles[0]);
+                        cmd.Parameters.AddWithValue("@secondRelatedArticle",
+                            article.RelatedArticles[1] != null ? article.RelatedArticles[1] : "");
+                    }
+                    else
+                        cmd.Parameters.AddWithValue("@firstRelatedArticle", article.RelatedArticles[0]);
+                }
                 cmd.Parameters.AddWithValue("@articleContent", article.ArticleContent);
 
                 int rowsaffected = cmd.ExecuteNonQuery();

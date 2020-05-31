@@ -28,6 +28,18 @@ namespace LearningApp.Controllers
         {
             ArticleDetails article = new ArticleDetails();
             article.RelatedArticles = await _adminRepository.GetArticleNames();
+
+            //article.RelatedArticles = new List<SelectListItem>();
+
+            //for (int i = 0; i < articles.Count; i++)
+            //{
+            //    article.RelatedArticles.Add(new SelectListItem
+            //    {
+            //        Text = articles[i],
+            //        Value = i.ToString()
+            //    });
+            //}
+
             return View(article);
         }
 

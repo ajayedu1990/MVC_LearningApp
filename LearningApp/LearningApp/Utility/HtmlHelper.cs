@@ -18,7 +18,7 @@ namespace LearningApp.Utility
                 var serializeContent = JsonConvert.SerializeObject(article);
                 var content = new StringContent(serializeContent);
 
-                var response = await client.PostAsync("createarticle", content);
+                var response = await client.PostAsJsonAsync("createarticle", article);
 
                 if (response.IsSuccessStatusCode)
                 {

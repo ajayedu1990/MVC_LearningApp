@@ -8,125 +8,150 @@
     ViewBag.Title = "AddArticle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<head>
-    <h2>AddArticle</h2>
-    <script>
-        $('document').ready(function () {
-            $('#divRelatedArticles').css('display', 'none');
-            var isSeriesElement = document.getElementById("IsSeries");
-            
-        });
-        function isSeriesChange(isSeriesElement) {
-            if (isSeriesElement.checked) {
-                $('#divRelatedArticles').css('display', 'inline');
-            }
-            else {
-                $('#divRelatedArticles').css('display', 'none');
-            }
+<h2>AddArticle</h2>
+<script type="text/javascript">
+    function isSeriesChange(isSeriesElement) {
+        if (isSeriesElement.checked) {
+            $('#divRelatedArticles').css('display', 'inline');
         }
-    </script>
-</head>
-<body>
-    @using (Html.BeginForm("CreateArticle", "Admin", FormMethod.Post, new { @id = "AddArticleForm" }))
-    {
-        <div class="container">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-2">
-                        @Html.Label("lblArticleName", "Article Name")
-                    </div>
-                    <div class="col-lg-8">
-                        @* @Html.TextBoxFor(m => m.ArticleName)*@
-                        @Html.EditorFor(m => m.ArticleName)
-                        @Html.ValidationMessageFor(m => m.ArticleName, " ", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
+        else {
+            $('#divRelatedArticles').css('display', 'none');
+        }
+    }
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-2">
-                        @Html.Label("lblArticleType", "Article Type")
-                    </div>
-                    <div class="col-lg-8">
-                        @Html.DropDownListFor(m => m.ArticleType, new SelectList(Enum.GetValues(typeof(ArticleTypeEnum))), " ")
-                        @Html.ValidationMessageFor(m => m.ArticleType, "", new { @class = "text-danger" })
-                        @*@Html.DropDownList("articleType", new SelectList(Enum.GetValues(typeof(ArticleType))), "Select Type")*@
-                    </div>
-                </div>
-            </div>
+    function addArticle() {
+        this.event.preventDefault();
+        var name = document.getElementById("ArticleName").value;
+        var arType = document.getElementById("ArticleType");
+        var articleTypeSelection = arType.options[arType.selectedIndex].value;
+        var isSeries = document.getElementById("IsSeries").checked;
+        var relatedArticles = [];
+        if (isSeries) {
+            $('#dropdownSeries option:selected').each(function () {
+                var optionText = $(this).text();
+                //console.log(optionText);
+                relatedArticles.push(optionText);
+            })
+        }
+        var articleContent = document.getElementById("ArticleContent").value;
+        var articleDetails = {
+            "ArticleName": name,
+            "ArticleType": articleTypeSelection,
+            "IsSeries": isSeries,
+            "RelatedArticles": relatedArticles,
+            "ArticleContent": articleContent
+        }
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-2">
-                        @Html.Label("lblIsSeries", "Is Series")
-                    </div>
-                    <div class="col-lg-8">
-                        <input name="IsSeries" class="check-box" id="IsSeries" type="checkbox" value="true" data-val-required="please choose IsSeries" data-val="true" onClick="isSeriesChange(this)" />
-                    </div>
-                </div>
-            </div>
+        var serviceUrl = 'CreateArticle';
 
-            <div class="form-group" id="divRelatedArticles">
-                <div class="row">
-                    <div class="col-lg-2">
-                        @Html.Label("lblArticleList", "Select Related Artcilces")
-                    </div>
-                    <div class="col-lg-8">
-                        @if(@Model.RelatedArticles!=null && @Model.RelatedArticles.Count>0){
-                        foreach(string article in @Model.RelatedArticles){
-                        <input type="checkbox" value=article id=article />@article <br />
-                        }
-                        }
-                    </div>
-                </div>
-            </div>
+        $.ajax({
+            type: "POST",
+            url: serviceUrl,
+            data: articleDetails,
+            success: successFunc,
+            error: errorFunc
+        });
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-2">
-                        @Html.Label("lblArticleContent", "Article Content")
-                    </div>
-                    <div class="col-lg-10">
-                        @Html.TextAreaFor(m => m.ArticleContent)
-                        @Html.ValidationMessageFor(m => m.ArticleContent, "", new { @class = "text-danger" })
-                        @*@Html.TextAreaFor(m=>m.ArticleContent)*@
-                        @*@Html.TextArea("articleContent", new { @class = "text-content" })*@
-                    </div>
-                </div>
-            </div>
+        function successFunc(data, status) {
+            alert("Article is added successfully");
+            window.location = 'http://localhost:51509/admin';
+        }
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <input type="button" title="clear" value="Clear" onclick="ClearFields()" />
-                    </div>
-                    <div class="col-lg-8">
-                        <input type="submit" title="submit" id="AddArticleSubmit" value="Add Article" />
-                    </div>
+        function errorFunc() {
+            alert('error');
+        }
+    }
+
+    function clearFields() {
+        console.log("inside clear function");
+        document.getElementById("ArticleName").val = "";
+        document.getElementById("ArticleType").val = "";
+        document.getElementById("IsSeries").checked = false;
+        document.getElementById("ArticleContent").val = "";
+    }
+</script>
+@using (Html.BeginForm("CreateArticle", "Admin", FormMethod.Post, new { @id = "AddArticleForm" }))
+{
+    <div class="container">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblArticleName", "Article Name")
+                </div>
+                <div class="col-lg-8">
+                    @* @Html.TextBoxFor(m => m.ArticleName)*@
+                    @Html.EditorFor(m => m.ArticleName)
+                    @Html.ValidationMessageFor(m => m.ArticleName, " ", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    }
-</body>
 
-<script>
-    function ClearFields() {
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblArticleType", "Article Type")
+                </div>
+                <div class="col-lg-8">
+                    @Html.DropDownListFor(m => m.ArticleType, new SelectList(Enum.GetValues(typeof(ArticleTypeEnum))), " ")
+                    @Html.ValidationMessageFor(m => m.ArticleType, "", new { @class = "text-danger" })
+                    @*@Html.DropDownList("articleType", new SelectList(Enum.GetValues(typeof(ArticleType))), "Select Type")*@
+                </div>
+            </div>
+        </div>
 
-        $("#ArticleName").val = "";
-        $("#ArticleType").val = "";
-        $("#IsSeries").val = "";
-        $("#ArticleContent").val = "";
-    }
-    function CreateArticle() {
-        var name = $('articleType').val();
-        var articleDetails = {
-            "ArticleName": name,
-            "ArticleType": $('articleType').val(),
-            "IsSeries": $('isSeries').val(),
-            "ArticleContent": $('articleContent').val()
-        }
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblIsSeries", "Is Series")
+                </div>
+                <div class="col-lg-8">
+                    <input name="IsSeries" class="check-box" id="IsSeries" type="checkbox" value="true" data-val-required="please choose IsSeries" data-val="true" onChange="isSeriesChange(this)" />
+                </div>
+            </div>
+        </div>
 
-        console.log(articleDetails);
-    }
-</script>
+        <div class="form-group" id="divRelatedArticles" style="display:none">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblArticleList", "Select Related Artcilces")
+                </div>
+                <div class="col-lg-8">
+                    <select id="dropdownSeries" class="selectpicker" multiple data-selected-text-format="count > 1" data-max-options="2">
+
+                        @foreach (string article in @Model.RelatedArticles)
+                        {
+                            <option value=@article>@article</option>
+                        }
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    @Html.Label("lblArticleContent", "Article Content")
+                </div>
+                <div class="col-lg-10">
+                    @Html.TextAreaFor(m => m.ArticleContent)
+                    @Html.ValidationMessageFor(m => m.ArticleContent, "", new { @class = "text-danger" })
+                    @*@Html.TextAreaFor(m=>m.ArticleContent)*@
+                    @*@Html.TextArea("articleContent", new { @class = "text-content" })*@
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    <input type="button" id="btnClear" title="clear" value="Clear" onClick="clearFields()" />
+                </div>
+                <div class="col-lg-8">
+                    <input type="submit" title="submit" id="AddArticleSubmit" value="Add Article" onClick="addArticle()" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
