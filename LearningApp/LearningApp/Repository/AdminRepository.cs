@@ -22,6 +22,12 @@ namespace LearningApp.Repository
             return name;
         }
 
+        public async Task<List<string>> GetArticleNames()
+        {
+            List<string> articleNames = await _helper.GetArticleNames();
+            return articleNames;
+        }
+
         public string DeleteArticle(int ArticleID)
         {
             throw new NotImplementedException();

@@ -14,5 +14,6 @@ namespace LearningApp.Repository
         string EditArticle(int ArticleID);
         string DeleteArticle(int ArticleID);
         Task<string> CreateArticle(ArticleDetails article);
+        Task<List<string>> GetArticleNames();
     }
 }

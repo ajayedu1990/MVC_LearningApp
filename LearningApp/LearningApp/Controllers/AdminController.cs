@@ -24,9 +24,23 @@ namespace LearningApp.Controllers
             return View();
         }
 
-        public ActionResult AddArticle()
+        public async Task<ActionResult> AddArticle()
         {
-            return View();
+            ArticleDetails article = new ArticleDetails();
+            article.RelatedArticles = await _adminRepository.GetArticleNames();
+
+            //article.RelatedArticles = new List<SelectListItem>();
+
+            //for (int i = 0; i < articles.Count; i++)
+            //{
+            //    article.RelatedArticles.Add(new SelectListItem
+            //    {
+            //        Text = articles[i],
+            //        Value = i.ToString()
+            //    });
+            //}
+
+            return View(article);
         }
 
         [HttpPost]

@@ -29,5 +29,12 @@ namespace LearningApp.Controllers.WebApiController
             else
                 return BadRequest();
         }
+
+        [Route("getarticlenames")]
+        public IHttpActionResult GetArticleNames()
+        {
+            List<string> articleNames = _apiAdminRepository.GetArticleNames();
+            return Ok(articleNames);
+        }
     }
 }
