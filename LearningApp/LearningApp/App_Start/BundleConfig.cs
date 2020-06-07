@@ -8,6 +8,8 @@ namespace LearningApp
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //var cdnPath = "https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js";
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -22,9 +24,18 @@ namespace LearningApp
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-select").Include(
+                "~/Scripts/bootstrap-select.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/popper").Include(
+                "~/Scripts/umd/popper.js",
+                "~/Scripts/umd/popper.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/bootstrap-multiselect.css",
+                      "~/Content/bootstrap-select.min.css"));
         }
     }
 }

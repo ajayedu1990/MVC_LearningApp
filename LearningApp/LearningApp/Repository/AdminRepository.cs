@@ -22,6 +22,12 @@ namespace LearningApp.Repository
             return name;
         }
 
+        public async Task<List<string>> GetArticleNames()
+        {
+            List<string> articleNames = await _helper.GetArticleNames();
+            return articleNames;
+        }
+
         public string DeleteArticle(int ArticleID)
         {
             throw new NotImplementedException();
@@ -32,14 +38,15 @@ namespace LearningApp.Repository
             throw new NotImplementedException();
         }
 
-        public List<ArticleDetails> GetArticles()
+        public List<ArticleDetails> GetSearchArticles(string searchString)
         {
             throw new NotImplementedException();
         }
 
-        public List<ArticleDetails> GetSearchArticles(string searchString)
+        public async Task<List<ArticleDetails>> GetArticleList()
         {
-            throw new NotImplementedException();
+            List<ArticleDetails> articles = await _helper.GetArticleList();
+            return articles;
         }
     }
 }

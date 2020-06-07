@@ -20,6 +20,13 @@ namespace LearningApp.Controllers.WebApiController
             _apiAdminRepository = apiAdminRepository;
         }
 
+        [Route("getarticlelist")]
+        public IHttpActionResult GetArticleList()
+        {
+            List<ArticleDetails> articles = _apiAdminRepository.GetArticleList();
+            return Ok(articles);
+        }
+
         [Route("createarticle")]
         public IHttpActionResult CreateArticle(ArticleDetails articleDetails)
         {
@@ -28,6 +35,13 @@ namespace LearningApp.Controllers.WebApiController
                 return Ok();
             else
                 return BadRequest();
+        }
+
+        [Route("getarticlenames")]
+        public IHttpActionResult GetArticleNames()
+        {
+            List<string> articleNames = _apiAdminRepository.GetArticleNames();
+            return Ok(articleNames);
         }
     }
 }
