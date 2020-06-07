@@ -20,6 +20,13 @@ namespace LearningApp.Controllers.WebApiController
             _apiAdminRepository = apiAdminRepository;
         }
 
+        [Route("getarticlelist")]
+        public IHttpActionResult GetArticleList()
+        {
+            List<ArticleDetails> articles = _apiAdminRepository.GetArticleList();
+            return Ok(articles);
+        }
+
         [Route("createarticle")]
         public IHttpActionResult CreateArticle(ArticleDetails articleDetails)
         {

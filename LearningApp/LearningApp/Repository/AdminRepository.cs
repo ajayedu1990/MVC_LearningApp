@@ -38,14 +38,15 @@ namespace LearningApp.Repository
             throw new NotImplementedException();
         }
 
-        public List<ArticleDetails> GetArticles()
+        public List<ArticleDetails> GetSearchArticles(string searchString)
         {
             throw new NotImplementedException();
         }
 
-        public List<ArticleDetails> GetSearchArticles(string searchString)
+        public async Task<List<ArticleDetails>> GetArticleList()
         {
-            throw new NotImplementedException();
+            List<ArticleDetails> articles = await _helper.GetArticleList();
+            return articles;
         }
     }
 }
