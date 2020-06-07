@@ -9,11 +9,11 @@ namespace LearningApp.Repository
 {
     public interface IAdminRepository
     {
-        List<ArticleDetails> GetArticles();
         List<ArticleDetails> GetSearchArticles(string searchString);
         string EditArticle(int ArticleID);
         string DeleteArticle(int ArticleID);
         Task<string> CreateArticle(ArticleDetails article);
         Task<List<string>> GetArticleNames();
+        Task<List<ArticleDetails>> GetArticleList();
     }
 }

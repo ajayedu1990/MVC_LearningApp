@@ -12,5 +12,7 @@ namespace LearningApp.ApiRepository
         string CreateArticle(ArticleDetails article);
 
         List<string> GetArticleNames();
+
+        List<ArticleDetails> GetArticleList();
     }
 }

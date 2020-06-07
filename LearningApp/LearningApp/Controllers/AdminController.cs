@@ -19,26 +19,16 @@ namespace LearningApp.Controllers
         }
 
         // GET: Admin
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            List<ArticleDetails> articles = await _adminRepository.GetArticleList();
+            return View(articles);
         }
 
         public async Task<ActionResult> AddArticle()
         {
             ArticleDetails article = new ArticleDetails();
             article.RelatedArticles = await _adminRepository.GetArticleNames();
-
-            //article.RelatedArticles = new List<SelectListItem>();
-
-            //for (int i = 0; i < articles.Count; i++)
-            //{
-            //    article.RelatedArticles.Add(new SelectListItem
-            //    {
-            //        Text = articles[i],
-            //        Value = i.ToString()
-            //    });
-            //}
 
             return View(article);
         }

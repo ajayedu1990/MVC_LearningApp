@@ -1,10 +1,46 @@
-﻿
+﻿@model IEnumerable<LearningApp.Models.ArticleDetails>
+
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Admin Home Page";
 }
 
-<h2>Admin Home Page</h2>
-<h4>List of Articles</h4>
-<h6>No article created</h6>
+<h2>testnew</h2>
 
+<div>
+    <h4>ArticleDetails</h4>
+    <hr />
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                ArticleName
+            </th>
+            <th>
+                ArticleType
+            </th>
+            <th>
+                IsSeries
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+        @foreach (LearningApp.Models.ArticleDetails article in Model)
+        {
+            <tr>
+                <td>
+                    @article.ArticleName
+                </td>
+                <td>
+                    @article.ArticleType
+                </td>
+                <td>
+                    @article.IsSeries
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=article.ArticleID }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id = Model.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
