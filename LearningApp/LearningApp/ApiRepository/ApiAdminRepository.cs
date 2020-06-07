@@ -61,12 +61,61 @@ namespace LearningApp.ApiRepository
             }
         }
 
+        public List<ArticleDetails> GetArticleList()
+        {
+            List<ArticleDetails> articles = new List<ArticleDetails>();
+            
+            var conn = _sqlHelper.GetSQLConnection();
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("GetArticlesList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    string[] related = new string[2];
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            ArticleDetails article = new ArticleDetails();
+                            article.RelatedArticles = new List<string>();
+                            for (int i = 0; i < 1; i++)
+                            {
+                                article.ArticleID = reader.GetInt32(i);
+                                article.ArticleName = reader.GetString(i + 1);
+                                article.ArticleType = reader.GetString(i + 2);
+                                article.IsSeries = reader.GetBoolean(i + 3);
+                                related = reader.IsDBNull(i + 4) ? null : reader.GetString(i + 4).Split(',');
+                                if (related != null)
+                                {
+                                    foreach (string id in related)
+                                    {
+                                        article.RelatedArticles.Add(id);
+                                    }
+                                }
+                                else
+                                    article.RelatedArticles = null;
+                            }
+                            articles.Add(article);
+                        }
+                    }
+                }
+                return articles;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<string> GetArticleNames()
         {
             List<string> articleNames = new List<string>();
+            var conn = _sqlHelper.GetSQLConnection();
             try
-            {
-                var conn = _sqlHelper.GetSQLConnection();
+            {   
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("GetArticleNames", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -84,10 +133,12 @@ namespace LearningApp.ApiRepository
                         }
                     }
                 }
+                conn.Close();
                 return articleNames;
             }
             catch(Exception ex)
             {
+                conn.Close();
                 throw ex;
             }
         }

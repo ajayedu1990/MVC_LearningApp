@@ -31,6 +31,30 @@ namespace LearningApp.Utility
             }
         }
 
+        public async Task<List<ArticleDetails>> GetArticleList()
+        {
+            List<ArticleDetails> articles = new List<ArticleDetails>();
+
+            try
+            {
+                using(var client = await GetClientAsync())
+                {
+                    var response = await client.GetAsync("getarticlelist");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        articles = JsonConvert.DeserializeObject<List<ArticleDetails>>(content);
+                    }
+                }
+                return articles; 
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<List<string>> GetArticleNames()
         {
             try

@@ -15,5 +15,7 @@ namespace LearningApp.Utility
         Task<string> CreateArticleAsync(ArticleDetails article);
 
         Task<List<string>> GetArticleNames();
+
+        Task<List<ArticleDetails>> GetArticleList();
     }
 }
